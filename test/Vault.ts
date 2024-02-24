@@ -44,7 +44,7 @@ describe("Vault", function () {
   })
 
 
-  describe("Allocate", function () {
+  describe("Claim", function () {
     it("Should revert with message if user has no allocation", async function () {
       const { vault, claimTime, otherAccount } = await loadFixture(deployOneYearLockFixture);
       await expect(vault.claimAllocation(otherAccount.address,)).to.be.revertedWith("You don't have any allocation")
