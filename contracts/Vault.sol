@@ -22,12 +22,18 @@ contract Vault {
 
         Allocation storage allocation = allocations[_from][msg.sender];
         uint balance = allocation.amount;
-        require(block.timestamp > allocation.timestamp, "Not yet");
+        require(block.timestamp >= allocation.timestamp, "Not yet");
         require(balance > 0, "You don't have any allocation");
 
         allocation.amount = 0;
         allocation.timestamp = 0;
         (bool callSuccess, ) = payable(msg.sender).call{value: balance}("");
         require(callSuccess, "Error");
+    }
+
+    function getAllocation(
+        address _from
+    ) external view returns (Allocation memory) {
+        return allocations[_from][msg.sender];
     }
 }
